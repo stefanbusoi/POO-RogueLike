@@ -1,22 +1,29 @@
-//
-// Created by stefa on 3/11/2025.
-//
+#pragma once
 
-#ifndef GAME_H
-#define GAME_H
-#include "Camera.h"
-#include "SFML/Window/Window.hpp"
+#include <iostream>
 
-
+#include <SFML/Graphics.hpp>
+#include "GameObject.h"
 class Game {
     sf::RenderWindow window;
-public:
-    bool IsRunning() {
-        return window.isOpen();
+    sf::Clock clock;
+    std::string title_;
+    void RenderAll() {
+        window.clear();
+        window.display();
     }
+    std::unordered_map<int,GameObject*> gameObjects;
+
+public:
+    static Game* game;
+
+    Game(sf::VideoMode video_mode,std::string Title);
+    ~Game(){
+        if (IsRunning()) Exit();
+    }
+    bool IsRunning() const;
+    sf::RenderWindow &getWindow() {return window;}
+    void Exit();
+    void ProcessGameFrame();
 
 };
-
-
-
-#endif //GAME_H

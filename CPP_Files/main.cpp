@@ -1,67 +1,50 @@
 #include <iostream>
 #include <chrono>
+#include <functional>
 #include <thread>
 
 #include <SFML/Graphics.hpp>
-
+#include "Game.h"
 #include "Camera.h"
 
-
 int main() {
-    sf::RenderWindow window;
-    window.create(sf::VideoMode({800, 800}), "RogueLike", sf::Style::Default);
-    window.setVerticalSyncEnabled(true);
+    Game game(sf::VideoMode({1920, 1080}), "RogueLike");
 
-    Camera camera(window);
+    Camera camera(game.getWindow());
 
-
-    std::cout << "Fereastra a fost creată\n";
-
-    while(window.isOpen()) {
-        bool shouldExit = false;
-        while(const std::optional event = window.pollEvent()) {
+    while(game.IsRunning()) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A)) {
+            camera.getTransform().translate(sf::Vector2f({-1.0f,0.0f})*0.1f);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D)) {
+            camera.getTransform().translate(sf::Vector2f({1.0f,0.0f})*0.1f);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W)) {
+            camera.getTransform().translate(sf::Vector2f({0.0f,-1.0f})*0.1f);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::S)) {
+            camera.getTransform().translate(sf::Vector2f({0.0f,1.0f})*0.1f);
+        }
+        while(const std::optional event = game.getWindow().pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
-                window.close();
-                std::cout << "Fereastra a fost închisă\n";
+                game.Exit();
             }
             else if (event->is<sf::Event::Resized>()) {
-                std::cout << "New width: " << window.getSize().x << '\n'
-                          << "New height: " << window.getSize().y << '\n';
+                std::cout << "New width: " << game.getWindow().getSize().x << '\n'
+                          << "New height: " << game.getWindow().getSize().y << '\n';
             }
             else if (event->is<sf::Event::KeyPressed>()) {
-                float speed=10;
                 const auto* keyPressed = event->getIf<sf::Event::KeyPressed>();
-
-                if (keyPressed->scancode==sf::Keyboard::Scancode::A) {
-                    camera.getTransform().translate(sf::Vector2f({-1.0f,0.0f})*speed);
-                }
-                if (keyPressed->scancode==sf::Keyboard::Scancode::D) {
-                    camera.getTransform().translate(sf::Vector2f({1.0f,0.0f})*speed);
-                }
-                if (keyPressed->scancode==sf::Keyboard::Scancode::W) {
-                    camera.getTransform().translate(sf::Vector2f({0.0f,-1.0f})*speed);
-                }
-                if (keyPressed->scancode==sf::Keyboard::Scancode::S) {
-                    camera.getTransform().translate(sf::Vector2f({0.0f,1.0f})*speed);
-                }
-
                 if(keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
-                    shouldExit = true;
+                    game.Exit();
                 }
             }else if (event->is<sf::Event::MouseButtonPressed>()) {
                 const auto* keyPressed = event->getIf<sf::Event::MouseButtonPressed>();
                 std::cout << "X: " << (keyPressed->position.x)<<",Y: "<<keyPressed->position.y ;
             }
         }
-        if(shouldExit) {
-            window.close();
-            std::cout << "Fereastra a fost inchisă (shouldExit == true)\n";
-            break;
-        }
-        // using namespace std::chrono_literals;
-        // std::this_thread::sleep_for(300ms);
 
-        window.clear();
+        game.getWindow().clear();
 
         sf::CircleShape shape(40.f);
         shape.setFillColor(sf::Color(100, 250, 50));
@@ -73,11 +56,10 @@ int main() {
         sf::Text text(font);
         text.setPosition(sf::Vector2f(0,0));
         text.setFillColor(sf::Color::White);
-        text.setString("MINECRAFT");
         text.setCharacterSize(20);
 
         camera.draw(text,sf::Transform::Identity);
-        window.display();
+        game.getWindow().display();
     }
 
     std::cout << "Programul a terminat executia\n";

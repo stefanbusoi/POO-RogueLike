@@ -18,12 +18,13 @@ protected:
     std::map<int,GameObject*> m_children;
     GameObject* m_parent;
 public:
-    GameObject() :LOCAL_ID(GLOBAL_ID++){
-    }
-  //  GameObject(GameObject& parent): LOCAL_ID(GLOBAL_ID++) {
+     GameObject(GameObject& parent) :LOCAL_ID(GLOBAL_ID++) {
+         m_parent = &parent;
+     }
+  // GameObject(GameObject& parent): LOCAL_ID(GLOBAL_ID++) {
   //      m_parent.emplace(parent);
   //
-  //  }
+  // }
     sf::Transform& getLocalTransform();
 
     sf::Transform& getGlobalTransform();
