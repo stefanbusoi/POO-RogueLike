@@ -1,83 +1,42 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.30) # FetchContent is available in 3.11+
+project(oop)
 
-# NOTE: update executable name in .github/workflows/cmake.yml:25 when changing executable name in this file
-# for now, the project name is used as the executable name
-set(MAIN_PROJECT_NAME "oop")
-set(MAIN_EXECUTABLE_NAME "${MAIN_PROJECT_NAME}")
+# Generate compile_commands.json
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-
-project(${MAIN_PROJECT_NAME})
-# set(CMAKE_PROJECT_VERSION_MAJOR 0)
-# set(CMAKE_PROJECT_VERSION_MINOR 0)
-# set(CMAKE_PROJECT_VERSION_PATCH 1)
-
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-include(cmake/Options.cmake)
-include(cmake/CompilerFlags.cmake)
-include(cmake/CopyHelper.cmake)
-
-###############################################################################
-
-# external dependencies with FetchContent
-# include(FetchContent)
-#
-# set(FETCHCONTENT_QUIET OFF)
-# set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
-#
-# NOTE: Also update env vars used for caching in
-#         - .github/actions/configure-cmake/action.yml
-#         - .github/workflows/cmake.yml
-# FetchContent_Declare(
-#         SomeLib
-#         GIT_REPOSITORY https://github.com/<SomeUser>/<SomeLib>.git
-#         GIT_TAG        <some_git_hash> # <which tag/branch @ <some_date>>
-#         GIT_SHALLOW    1  # works only with branches or tags, not with arbitrary commit hashes
-# )
-#
-# FetchContent_MakeAvailable(SomeLib)
-
-###############################################################################
-
-# external dependencies with find_package
-
-# find_package(Threads REQUIRED)
-
-###############################################################################
-
-# NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
-add_executable(${MAIN_EXECUTABLE_NAME}
-    main.cpp
-    generated/src/Helper.cpp
-)
-
-# NOTE: Add all defined targets (e.g. executables, libraries, etc. )
-# NOTE: RUN_SANITIZERS is optional, if it's not present it will default to true
-set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})
-# set_compiler_flags(TARGET_NAMES ${MAIN_EXECUTABLE_NAME} ${FOO} ${BAR})
-# where ${FOO} and ${BAR} represent additional executables or libraries
-# you want to compile with the set compiler flags
-
-###############################################################################
-
-# use SYSTEM so cppcheck and clang-tidy do not report warnings from these directories
-target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE generated/include)
-# target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
-# target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ${<SomeLib>_SOURCE_DIR}/include)
-# target_link_directories(${MAIN_EXECUTABLE_NAME} PRIVATE ${<SomeLib>_BINARY_DIR}/lib)
-# target_link_libraries(${MAIN_EXECUTABLE_NAME} <SomeLib>)
-
-###############################################################################
-
-# copy binaries to "bin" folder; these are uploaded as artifacts on each release
-# DESTINATION_DIR is set as "bin" in cmake/Options.cmake:6
-install(TARGETS ${MAIN_EXECUTABLE_NAME} DESTINATION ${DESTINATION_DIR})
-if(APPLE)
-    install(FILES launcher.command DESTINATION ${DESTINATION_DIR})
+# Dependencies
+set(RAYLIB_VERSION 5.5)
+find_package(raylib ${RAYLIB_VERSION} QUIET) # QUIET or REQUIRED
+if (NOT raylib_FOUND) # If there's none, fetch and build raylib
+    include(FetchContent)
+    FetchContent_Declare(
+            raylib
+            DOWNLOAD_EXTRACT_TIMESTAMP OFF
+            URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
+    )
+    FetchContent_GetProperties(raylib)
+    if (NOT raylib_POPULATED) # Have we downloaded raylib yet?
+        set(FETCHCONTENT_QUIET NO)
+        FetchContent_MakeAvailable(raylib)
+        set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
+    endif()
 endif()
 
-copy_files(FILES tastatura.txt COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
-# copy_files(FILES tastatura.txt config.json DIRECTORY images sounds COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
-# copy_files(DIRECTORY images sounds COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
+# Our Project
+
+add_executable(${PROJECT_NAME} CPP_Code/main.cpp)
+#set(raylib_VERBOSE 1)
+target_link_libraries(${PROJECT_NAME} raylib)
+
+# Web Configurations
+if (${PLATFORM} STREQUAL "Web")
+    set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html") # Tell Emscripten to build an example.html file.
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 -s ASYNCIFY -s GL_ENABLE_GET_PROC_ADDRESS=1")
+endif()
+
+# Checks if OSX and links appropriate frameworks (Only required on MacOS)
+if (APPLE)
+    target_link_libraries(${PROJECT_NAME} "-framework IOKit")
+    target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
+    target_link_libraries(${PROJECT_NAME} "-framework OpenGL")
+endif()
