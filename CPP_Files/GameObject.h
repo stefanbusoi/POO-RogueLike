@@ -1,12 +1,8 @@
-//
-// Created by stefa on 3/11/2025.
-//
+#pragma once
 
-#ifndef GAMEOBJECT_H
-#define GAMEOBJECT_H
 #include <map>
-#include <vector>
 
+#include "Camera.h"
 #include "SFML/Graphics/Transform.hpp"
 
 
@@ -17,19 +13,28 @@ protected:
     sf::Transform m_transform;
     std::map<int,GameObject*> m_children;
     GameObject* m_parent;
+
 public:
-     GameObject(GameObject& parent) :LOCAL_ID(GLOBAL_ID++) {
-         m_parent = &parent;
-     }
-  // GameObject(GameObject& parent): LOCAL_ID(GLOBAL_ID++) {
+
+    GameObject(GameObject& parent);
+    GameObject();
+    virtual void Render(const Camera& camera);
+    virtual ~GameObject();
+    // GameObject(GameObject& parent): LOCAL_ID(GLOBAL_ID++) {
   //      m_parent.emplace(parent);
   //
   // }
+    virtual void update(float deltaT);
+    virtual void start();
     sf::Transform& getLocalTransform();
-
+    int GetId() const {return LOCAL_ID;}
     sf::Transform& getGlobalTransform();
 };
 
 
 
-#endif //GAMEOBJECT_H
+
+
+
+
+

@@ -1,10 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "GameObject.h"
-
-
-class Camera {
+class Camera{
     sf::Transform m_transform=sf::Transform::Identity;
     sf::RenderWindow& m_window;
 public:

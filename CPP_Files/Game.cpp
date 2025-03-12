@@ -3,9 +3,10 @@
 //
 
 #include "Game.h"
-Game::Game(const sf::VideoMode video_mode, std::string Title): title_(std::move(Title)) {
+Game::Game(const sf::VideoMode video_mode, std::string Title): title_(std::move(Title)) ,camera(Camera(window)){
     window.create(video_mode, Title, sf::State::Fullscreen);
     std::cout << "Fereastra a fost creata\n";
+
 }
 
 bool Game::IsRunning() const {
@@ -18,13 +19,14 @@ void Game::Exit() {
     std::cout << "Fereastra a fost inchisa\n";
 }
 //TODO: edit this
-void Game::ProcessGameFrame() {
-    //sf::Time deltaTime = clock.getElapsedTime();
+float Game::ProcessGameFrame() {
+    sf::Time deltaTime = clock.getElapsedTime();
     clock.restart();
-    //for (const auto& [i, j]:gameObjects) {
-        //Run j.Update(deltaTime)
-    //}
+    for (const auto& [i, j]:gameObjects) {
+        j->update(deltaTime.asSeconds());
+    }
     RenderAll();
+    return  deltaTime.asSeconds();
 }
 
 
