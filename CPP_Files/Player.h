@@ -13,7 +13,6 @@ class Player :public GameObject{
     void update(float deltaT) override;
     ~Player() override;
     void Render(const Camera& camera ) override;
-
 };
 void start();
 

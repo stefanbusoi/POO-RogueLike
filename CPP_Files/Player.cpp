@@ -4,20 +4,32 @@
 
 #include "Player.h"
 
+#include <minwindef.h>
+
 void Player::update(float deltaT)  {
-    float speed=500;
+    float SpeedConst=500;
+    sf::Vector2f speed;
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A)) {
-        m_transform.translate(sf::Vector2f({-1.0f,0.0f})*deltaT*speed);
+       speed+=sf::Vector2f({-1.0f,0.0f});
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D)) {
-        m_transform.translate(sf::Vector2f({1.0f,0.0f})*deltaT*speed);
+        speed+=sf::Vector2f({1.0f,0.0f});
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W)) {
-        m_transform.translate(sf::Vector2f({0.0f,-1.0f})*deltaT*speed);
+        speed+=sf::Vector2f({0.0f,-1.0f});
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::S)) {
-        m_transform.translate(sf::Vector2f({0.0f,1.0f})*deltaT*speed);
+        speed+=sf::Vector2f({0.0f,1.0f});
     }
+    if (speed.x!=0||speed.y!=0) {
+        speed=speed.normalized();
+        speed=speed*deltaT*SpeedConst;
+    }
+
+    m_transform.translate(speed);
+
+
 }
 
 Player::~Player() {

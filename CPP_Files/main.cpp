@@ -12,7 +12,7 @@ int main() {
     Game game(sf::VideoMode({1920, 1080}), "RogueLike");
     game.AddGameObject<Player>();
     while(game.IsRunning()) {
-        float deltaT=game.ProcessGameFrame();
+        game.ProcessGameFrame();
         while(const std::optional event = game.getWindow().pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 game.Exit();
