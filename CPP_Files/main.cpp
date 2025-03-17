@@ -5,14 +5,16 @@
 
 #include <SFML/Graphics.hpp>
 #include "Game.h"
-#include "Camera.h"
+#include "GameMap.h"
 #include "Player.h"
 
 int main() {
     Game game(sf::VideoMode({1920, 1080}), "RogueLike");
     game.AddGameObject<Player>();
+    game.AddGameObject<GameMap>();
+
     while(game.IsRunning()) {
-        game.ProcessGameFrame();
+        float time=game.ProcessGameFrame();
         while(const std::optional event = game.getWindow().pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 game.Exit();
@@ -31,6 +33,19 @@ int main() {
                 std::cout << "X: " << (keyPressed->position.x)<<",Y: "<<keyPressed->position.y ;
             }
         }
+
+        sf::Font font("../Minecraft.ttf");
+        sf::Text text(font);
+        text.setString(std::to_string(time));
+        text.setPosition(sf::Vector2f(30,30));
+        text.setFillColor(sf::Color::White);
+        text.setCharacterSize(20);
+        game.getWindow().draw(text);
+
+        text.setString(std::to_string(1/time));
+        text.setPosition(sf::Vector2f(30,50));
+        game.getWindow().draw(text);
+
     }
 
     std::cout << "Programul a terminat executia\n";

@@ -7,25 +7,23 @@
 #include "Camera.h"
 #include "GameObject.h"
 
-class Game {
+class Game :public GameObject{
     sf::RenderWindow window;
     sf::Clock clock;
     std::string title_;
     Camera camera;
-
+    static Game* instance;
     //Camera camera;
-    void RenderAll() {
-        window.clear();
-        for (const auto& [i, j]:gameObjects) {
-            j->Render(camera);
-        }
-        window.display();
-    }
+    void RenderAll();
+    static Game* game;
+
     std::unordered_map<int,GameObject*> gameObjects;
 
 public:
-    static Game* game;
+    static Game *getInstance();
 
+    Game(const Game&) = delete;
+    Game& operator=(const Game&) = delete;
     Game(sf::VideoMode video_mode,std::string Title);
     ~Game(){
         if (IsRunning()) Exit();

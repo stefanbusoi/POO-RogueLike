@@ -53,3 +53,7 @@ void Player::Render(const Camera& camera) {
     camera.draw(text,m_transform);
 }
 
+void Player::start() {
+
+}
+

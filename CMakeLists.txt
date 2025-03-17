@@ -64,6 +64,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         CPP_Files/Game.cpp
         CPP_Files/Player.cpp
         CPP_Files/Player.h
+        CPP_Files/GameMap.cpp
+        CPP_Files/GameMap.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

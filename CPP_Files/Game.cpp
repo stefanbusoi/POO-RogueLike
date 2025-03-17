@@ -3,10 +3,26 @@
 //
 
 #include "Game.h"
+Game* Game::instance = nullptr;
+
+void Game::RenderAll() {
+    window.display();
+    window.clear();
+    for (const auto& [i, j]:gameObjects) {
+        j->Render(camera);
+    }
+
+}
+
+Game *Game::getInstance() {return instance;}
+
 Game::Game(const sf::VideoMode video_mode, std::string Title): title_(std::move(Title)) ,camera(Camera(window)){
     window.create(video_mode, Title, sf::State::Fullscreen);
     std::cout << "Fereastra a fost creata\n";
+    if (instance==nullptr) {
+        instance=this;
 
+    }
 }
 
 bool Game::IsRunning() const {
@@ -28,5 +44,6 @@ float Game::ProcessGameFrame() {
     RenderAll();
     return  deltaTime.asSeconds();
 }
+
 
 

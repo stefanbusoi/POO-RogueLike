@@ -11,7 +11,7 @@ protected:
     static int GLOBAL_ID;
     int LOCAL_ID;
     sf::Transform m_transform;
-    std::map<int,GameObject*> m_children;
+    std::unordered_map<int,GameObject*> m_children;
     GameObject* m_parent;
 
 public:
