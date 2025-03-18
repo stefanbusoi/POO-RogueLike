@@ -22,6 +22,7 @@ GameMap::~GameMap() {
 }
 
 void GameMap::update(float deltaT) {
+    (void)deltaT;
 }
 
 void GameMap::start() {
