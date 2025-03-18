@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 
+
 #include "SFML/Graphics/Transform.hpp"
 
 
@@ -38,7 +39,19 @@ public:
 
     int GetId() const {return LOCAL_ID;}
     sf::Transform& getGlobalTransform();
+    template <typename T>
+
+    T* AddGameObject();
 };
+
+template<typename T>
+T* GameObject::AddGameObject() {
+    T* newGameObject = new T();
+    m_children.insert(std::pair<int,GameObject*>(newGameObject->GetId(),newGameObject));
+    //TODO:Fix this
+    //  Game::getInstance()->getGameObjects().insert(std::pair<int,GameObject*>(newGameObject->GetId(),newGameObject));
+    return newGameObject;
+}
 
 
 
