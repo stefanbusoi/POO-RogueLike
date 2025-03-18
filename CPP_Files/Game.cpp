@@ -8,15 +8,16 @@ Game* Game::instance = nullptr;
 void Game::RenderAll() {
     window.display();
     window.clear();
-    for (const auto& [i, j]:gameObjects) {
-        j->Render(camera);
+    for (const auto& [_, gameObject]:gameObjects) {
+        gameObject->Render(camera);
     }
 
 }
 
 Game *Game::getInstance() {return instance;}
 
-Game::Game(const sf::VideoMode video_mode, std::string Title): title_(std::move(Title)) ,camera(Camera(window)){
+Game::Game(const sf::VideoMode video_mode, std::string Title): title_(Title) ,camera(Camera(window)){
+
     window.create(video_mode, Title, sf::State::Fullscreen);
     std::cout << "Fereastra a fost creata\n";
     if (instance==nullptr) {

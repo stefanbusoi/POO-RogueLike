@@ -21,8 +21,7 @@ class Game :public GameObject{
 public:
     static Game *getInstance();
 
-    Game(const Game&) = delete;
-    Game& operator=(const Game&) = delete;
+
     Game(sf::VideoMode video_mode,std::string Title);
     ~Game() override;
 
@@ -33,6 +32,11 @@ public:
     float ProcessGameFrame();
     template <typename T>
     T* AddGameObject();
+
+
+    Game(const Game&) = delete;
+    Game& operator=(const Game&) = delete;
+
 };
 
 template<typename T>

@@ -40,6 +40,7 @@ void Player::Render(const Camera& camera) {
     shape.setPosition(sf::Vector2f(-20, -20));
     sf::Transform transform=this->m_transform;
     transform.translate(sf::Vector2f(40,40));
+
     camera.draw(shape,transform);
     sf::Font font("../Minecraft.ttf");
 

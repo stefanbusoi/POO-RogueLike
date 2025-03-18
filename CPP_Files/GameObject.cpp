@@ -5,14 +5,18 @@
 #include "GameObject.h"
 
 #include <iostream>
+#include <utility>
 int GameObject::GLOBAL_ID = 0;
-GameObject::GameObject(GameObject &parent):LOCAL_ID(GLOBAL_ID++) {
+GameObject::GameObject(GameObject &parent,std::string name,sf::Transform transform):
+    LOCAL_ID(GLOBAL_ID++),
+    m_name(std::move(name)),
+    m_transform(transform) {
     m_parent = &parent;
 }
 
 GameObject::GameObject(std::string name, sf::Transform transform): LOCAL_ID(GLOBAL_ID++),
-                                                                   m_name(name),
                                                                     m_transform(transform),
+                                                                    m_name(std::move(name)),
                                                                     m_parent(nullptr) {}
 
 
