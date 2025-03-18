@@ -16,10 +16,9 @@ void Game::RenderAll() {
 
 Game *Game::getInstance() {return instance;}
 
-Game::Game(const sf::VideoMode video_mode, std::string Title): title_(Title) ,camera(Camera(window)){
+Game::Game(const sf::VideoMode video_mode, const std::string &Title): title_(Title) ,camera(Camera(window)){
 
     window.create(video_mode, Title, sf::State::Fullscreen);
-    std::cout << "Fereastra a fost creata\n";
     if (instance==nullptr) {
         instance=this;
 

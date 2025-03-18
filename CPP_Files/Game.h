@@ -22,7 +22,7 @@ public:
     static Game *getInstance();
 
 
-    Game(sf::VideoMode video_mode,std::string Title);
+    Game(sf::VideoMode video_mode, const std::string &Title);
     ~Game() override;
 
     bool IsRunning() const;

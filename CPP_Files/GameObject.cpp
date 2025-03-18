@@ -9,10 +9,10 @@
 int GameObject::GLOBAL_ID = 0;
 GameObject::GameObject(GameObject &parent,std::string name,sf::Transform transform):
     LOCAL_ID(GLOBAL_ID++),
+    m_transform(transform),
     m_name(std::move(name)),
-    m_transform(transform) {
-    m_parent = &parent;
-}
+    m_parent(&parent)
+   {}
 
 GameObject::GameObject(std::string name, sf::Transform transform): LOCAL_ID(GLOBAL_ID++),
                                                                     m_transform(transform),
@@ -21,11 +21,13 @@ GameObject::GameObject(std::string name, sf::Transform transform): LOCAL_ID(GLOB
 
 
 void GameObject::Render(const Camera& camera) {
+    (void)camera;
 }
 
 GameObject::~GameObject() {}
 
 void GameObject::update(float deltaT) {
+    (void)deltaT;
 }
 
 
