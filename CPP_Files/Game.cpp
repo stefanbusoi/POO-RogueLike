@@ -3,26 +3,34 @@
 //
 
 #include "Game.h"
+
+#include "GameMap.h"
+#include "Player.h"
+
+
 Game* Game::instance = nullptr;
 
 void Game::RenderAll() {
     window.display();
     window.clear();
-    for (const auto& [_, gameObject]:gameObjects) {
-        gameObject->Render(camera);
+    for (const auto& [_, gameObject]:m_children) {
+        gameObject->Render();
     }
 
 }
 
+
 Game *Game::getInstance() {return instance;}
 
-Game::Game(const sf::VideoMode video_mode, const std::string &Title): title_(Title) ,camera(Camera(window)){
-
-    window.create(video_mode, Title, sf::State::Fullscreen);
+Game::Game(const sf::VideoMode video_mode, const std::string &Title): title_(Title){
     if (instance==nullptr) {
         instance=this;
 
     }
+    window.create(video_mode, Title, sf::State::Fullscreen);
+    AddGameObject<Player>();
+    camera=AddGameObject<Camera>();
+    AddGameObject<GameMap>();
 }
 
 Game::~Game() {
@@ -42,7 +50,7 @@ void Game::Exit() {
 float Game::ProcessGameFrame() {
     sf::Time deltaTime = clock.getElapsedTime();
     clock.restart();
-    for (const auto& [i, j]:gameObjects) {
+    for (const auto& [i, j]:m_children) {
         j->update(deltaTime.asSeconds());
     }
     RenderAll();

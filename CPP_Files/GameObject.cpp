@@ -14,14 +14,15 @@ GameObject::GameObject(GameObject &parent,std::string name,sf::Transform transfo
     m_parent(&parent)
    {}
 
+
 GameObject::GameObject(std::string name, sf::Transform transform): LOCAL_ID(GLOBAL_ID++),
-                                                                    m_transform(transform),
-                                                                    m_name(std::move(name)),
-                                                                    m_parent(nullptr) {}
+                                                                   m_transform(transform),
+                                                                   m_name(std::move(name)),
+                                                                   m_parent(nullptr) {}
 
 
-void GameObject::Render(const Camera& camera) {
-    (void)camera;
+void GameObject::Render() {
+
 }
 
 GameObject::~GameObject() {}

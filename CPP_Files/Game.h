@@ -5,18 +5,17 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameObject.h"
-
+#include "Camera.h"
 class Game :public GameObject{
     sf::RenderWindow window;
     sf::Clock clock;
     std::string title_;
-    Camera camera;
+    Camera* camera;
     static Game* instance;
     //Camera camera;
     void RenderAll();
     static Game* game;
 
-    std::unordered_map<int,GameObject*> gameObjects;
 
 public:
     static Game *getInstance();
@@ -27,13 +26,12 @@ public:
 
     bool IsRunning() const;
     sf::RenderWindow &getWindow() {return window;}
-    Camera& getCamera() {return camera;}
+    Camera& getCamera() {return *camera;}
     void Exit();
     float ProcessGameFrame();
+
     template <typename T>
     T* AddGameObject();
-
-
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;
 
@@ -42,6 +40,7 @@ public:
 template<typename T>
 T* Game::AddGameObject() {
     T* newGameObject = new T();
-    gameObjects.insert(std::pair<int,GameObject*>(newGameObject->GetId(),newGameObject));
+    m_children.insert(std::pair<int,GameObject*>(newGameObject->GetId(),newGameObject));
     return newGameObject;
 }
+

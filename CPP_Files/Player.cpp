@@ -4,6 +4,8 @@
 
 #include "Player.h"
 
+#include "Game.h"
+
 
 void Player::update(float deltaT)  {
     float SpeedConst=500;
@@ -34,19 +36,19 @@ void Player::update(float deltaT)  {
 Player::~Player() {
 }
 
-void Player::Render(const Camera& camera) {
+void Player::Render() {
+    const Camera& camera=Game::getInstance()->getCamera();
     sf::CircleShape shape(40.f);
     shape.setFillColor(sf::Color(100, 250, 50));
-    shape.setPosition(sf::Vector2f(-20, -20));
+    shape.setPosition(sf::Vector2f(-20,-20));
     sf::Transform transform=this->m_transform;
-    transform.translate(sf::Vector2f(40,40));
 
     camera.draw(shape,transform);
     sf::Font font("../Minecraft.ttf");
 
     sf::Text text(font);
     text.setString("STEFAN");
-    text.setPosition(sf::Vector2f(0,-30));
+    text.setPosition(sf::Vector2f(-20,-47));
     text.setFillColor(sf::Color::White);
     text.setCharacterSize(20);
 

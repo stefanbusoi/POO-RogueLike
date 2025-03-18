@@ -10,8 +10,7 @@
 
 int main() {
     Game game(sf::VideoMode({1920, 1080}), "RogueLike");
-    game.AddGameObject<Player>();
-    game.AddGameObject<GameMap>();
+
 
     while(game.IsRunning()) {
         float time=game.ProcessGameFrame();

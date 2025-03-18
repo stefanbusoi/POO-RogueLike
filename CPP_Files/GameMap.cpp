@@ -6,9 +6,12 @@
 
 #include <iostream>
 
-void GameMap::Render(const Camera &camera) {
-    for (int i=-30;i<30;i++)
-    for (int j=-30;j<30;j++) {
+#include "Game.h"
+
+void GameMap::Render() {
+    Camera &camera=Game::getInstance()->getCamera();
+    for (int i=-60;i<60;i++)
+    for (int j=-60;j<60;j++) {
         sf::RectangleShape rect;
         sf::Transform transform=sf::Transform::Identity;
         transform.translate(sf::Vector2f(i,j)*100.0f);

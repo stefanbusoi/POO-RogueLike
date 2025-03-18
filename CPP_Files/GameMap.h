@@ -9,7 +9,7 @@
 
 class GameMap:public GameObject{
 public:
-    void Render(const Camera &camera) override;
+    void Render() override;
 
     ~GameMap() override;
 

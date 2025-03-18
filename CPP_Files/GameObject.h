@@ -1,8 +1,9 @@
 #pragma once
 
 #include <map>
+#include <string>
+#include <unordered_map>
 
-#include "Camera.h"
 #include "SFML/Graphics/Transform.hpp"
 
 
@@ -23,7 +24,7 @@ public:
     GameObject( GameObject &parent,std::string name, sf::Transform transform);
 
     GameObject(std::string name="NONNAME",sf::Transform transform=sf::Transform::Identity);
-    virtual void Render(const Camera& camera);
+    virtual void Render();
     virtual ~GameObject();
     // GameObject(GameObject& parent): LOCAL_ID(GLOBAL_ID++) {
   //      m_parent.emplace(parent);
@@ -32,6 +33,9 @@ public:
     virtual void update(float deltaT);
     virtual void start();
     sf::Transform& getLocalTransform();
+
+    std::unordered_map<int, GameObject *> getChildrens() const {return m_children;}
+
     int GetId() const {return LOCAL_ID;}
     sf::Transform& getGlobalTransform();
 };
