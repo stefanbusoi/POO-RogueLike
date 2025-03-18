@@ -10,9 +10,11 @@ GameObject::GameObject(GameObject &parent):LOCAL_ID(GLOBAL_ID++) {
     m_parent = &parent;
 }
 
-GameObject::GameObject():LOCAL_ID(GLOBAL_ID++) {
-    m_parent = nullptr;
-}
+GameObject::GameObject(std::string name, sf::Transform transform): LOCAL_ID(GLOBAL_ID++),
+                                                                   m_name(name),
+                                                                    m_transform(transform),
+                                                                    m_parent(nullptr) {}
+
 
 void GameObject::Render(const Camera& camera) {
 }

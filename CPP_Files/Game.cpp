@@ -25,6 +25,10 @@ Game::Game(const sf::VideoMode video_mode, std::string Title): title_(std::move(
     }
 }
 
+Game::~Game() {
+    if (IsRunning()) Exit();
+}
+
 bool Game::IsRunning() const {
     return window.isOpen();
 

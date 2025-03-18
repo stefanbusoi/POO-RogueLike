@@ -13,11 +13,12 @@ protected:
     sf::Transform m_transform;
     std::unordered_map<int,GameObject*> m_children;
     GameObject* m_parent;
+    std::string m_name;
 
 public:
 
     GameObject(GameObject& parent);
-    GameObject();
+    GameObject(std::string name="NONNAME",sf::Transform transform=sf::Transform::Identity);
     virtual void Render(const Camera& camera);
     virtual ~GameObject();
     // GameObject(GameObject& parent): LOCAL_ID(GLOBAL_ID++) {

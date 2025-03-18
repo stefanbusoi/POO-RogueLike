@@ -4,7 +4,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Camera.h"
 #include "GameObject.h"
 
 class Game :public GameObject{
@@ -25,20 +24,20 @@ public:
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;
     Game(sf::VideoMode video_mode,std::string Title);
-    ~Game(){
-        if (IsRunning()) Exit();
-    }
+    ~Game() override;
+
     bool IsRunning() const;
     sf::RenderWindow &getWindow() {return window;}
     Camera& getCamera() {return camera;}
     void Exit();
     float ProcessGameFrame();
     template <typename T>
-    void AddGameObject();
+    T* AddGameObject();
 };
 
 template<typename T>
-void Game::AddGameObject() {
+T* Game::AddGameObject() {
     T* newGameObject = new T();
     gameObjects.insert(std::pair<int,GameObject*>(newGameObject->GetId(),newGameObject));
+    return newGameObject;
 }

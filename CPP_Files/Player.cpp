@@ -4,7 +4,6 @@
 
 #include "Player.h"
 
-#include <minwindef.h>
 
 void Player::update(float deltaT)  {
     float SpeedConst=500;
@@ -45,7 +44,7 @@ void Player::Render(const Camera& camera) {
     sf::Font font("../Minecraft.ttf");
 
     sf::Text text(font);
-    text.setString("CEVA");
+    text.setString("STEFAN");
     text.setPosition(sf::Vector2f(0,-30));
     text.setFillColor(sf::Color::White);
     text.setCharacterSize(20);
