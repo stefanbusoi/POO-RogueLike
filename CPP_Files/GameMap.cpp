@@ -10,8 +10,8 @@
 
 void GameMap::Render() {
     Camera &camera=Game::getInstance()->getCamera();
-    for (int i=-60;i<60;i++)
-    for (int j=-60;j<60;j++) {
+    for (int i=-5;i<5;i++)
+    for (int j=-5;j<5;j++) {
         sf::RectangleShape rect;
         sf::Transform transform=sf::Transform::Identity;
         transform.translate(sf::Vector2f(i,j)*100.0f);
@@ -26,7 +26,4 @@ GameMap::~GameMap() {
 
 void GameMap::update(float deltaT) {
     (void)deltaT;
-}
-
-void GameMap::start() {
 }

@@ -6,7 +6,12 @@
 #include "Game.h"
 
 Camera::Camera():m_window(&Game::getInstance()->getWindow()) {
-        m_player=dynamic_cast<Player*>(Game::getInstance()->getChildrens()[1]);
+        for (const auto& player:Game::getInstance()->getChildrens()) {
+                m_player=dynamic_cast<Player*>(player);
+                if (m_player!=nullptr)
+                        break;
+        }
+        m_updateOrder=UpdateOrder::Camera;
 }
 
 sf::Transform& Camera::getTransform(){
@@ -14,6 +19,7 @@ sf::Transform& Camera::getTransform(){
 }
 void Camera::update(float deltaT) {
         m_transform=m_player->getGlobalTransform();
+        std::cout<<"Test";
 }
 
 void Camera::draw(const sf::Drawable& drawable,sf::Transform transform) const {

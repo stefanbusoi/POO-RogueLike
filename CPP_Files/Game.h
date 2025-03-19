@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <set>
 
 #include <SFML/Graphics.hpp>
 
@@ -14,7 +15,8 @@ class Game :public GameObject{
     static Game* instance;
     void RenderAll();
     static Game* game;
-    std::map<int,GameObject*> gameObjects;
+    std::set<GameObject*> gameObjects;
+    std::set<IRenderable*> m_renderableObjects;
 
 public:
     static Game *getInstance();
@@ -23,9 +25,11 @@ public:
     bool IsRunning() const;
     sf::RenderWindow &getWindow() {return window;}
     Camera& getCamera() const {return *camera;}
-    std::map<int,GameObject*>& getGameObjects(){return gameObjects;}
+    std::set<GameObject*>& getGameObjects(){return gameObjects;}
     void Exit();
     float ProcessGameFrame();
+
+    std::set<IRenderable*>& getRenderOrder(){return m_renderableObjects;};
 
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;

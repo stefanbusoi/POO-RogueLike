@@ -1,16 +1,15 @@
-//
-// Created by stefa on 3/12/2025.
-//
-
+#include "Camera.h"
 #include "Player.h"
-
 #include "Game.h"
 
 
 void Player::update(float deltaT)  {
     float SpeedConst=500;
-    sf::Vector2f speed;
 
+    sf::Vector2f speed;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space)) {
+        speed+=sf::Vector2f({-1.0f,0.0f});
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A)) {
        speed+=sf::Vector2f({-1.0f,0.0f});
     }
@@ -53,9 +52,5 @@ void Player::Render() {
     text.setCharacterSize(20);
 
     camera.draw(text,m_transform);
-}
-
-void Player::start() {
-
 }
 

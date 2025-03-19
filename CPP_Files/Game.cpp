@@ -13,8 +13,9 @@ Game* Game::instance = nullptr;
 void Game::RenderAll() {
     window.display();
     window.clear();
-    for (const auto& [_, gameObject]:m_children) {
-        gameObject->Render();
+    for (const auto& gameObject:m_renderableObjects) {
+        std::cout << m_renderableObjects.size() << std::endl;
+         gameObject->Render();
     }
 
 }
@@ -50,11 +51,12 @@ void Game::Exit() {
 float Game::ProcessGameFrame() {
     sf::Time deltaTime = clock.getElapsedTime();
     clock.restart();
-    for (const auto& [i, j]:m_children) {
-        j->update(deltaTime.asSeconds());
+    for (const auto& gameObject:gameObjects) {
+        gameObject->update(deltaTime.asSeconds());
     }
     RenderAll();
     return  deltaTime.asSeconds();
+
 }
 
 

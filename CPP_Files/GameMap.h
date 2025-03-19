@@ -5,9 +5,10 @@
 #ifndef GAMEMAP_H
 #define GAMEMAP_H
 #include "GameObject.h"
+#include "IRenderable.h"
 
 
-class GameMap:public GameObject{
+class GameMap:public GameObject,public IRenderable{
 public:
     void Render() override;
 
@@ -15,7 +16,6 @@ public:
 
     void update(float deltaT) override;
 
-    void start() override;
 };
 
 

@@ -5,15 +5,13 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "GameObject.h"
-#include "SFML/Graphics/Drawable.hpp"
-#include "SFML/Window/Keyboard.hpp"
+#include "IRenderable.h"
 
 
-class Player :public GameObject{
+class Player :public GameObject,public IRenderable{
     void update(float deltaT) override;
     ~Player() override;
     void Render() override;
-    void start()override;
 
 };
 
