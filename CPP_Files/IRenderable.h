@@ -1,7 +1,7 @@
 #pragma once
 #include "RenderOrder.h"
 class IRenderable {
-    private:
+    protected:
 
         RenderOrder m_renderOrder;
     public:

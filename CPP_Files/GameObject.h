@@ -1,14 +1,11 @@
 #pragma once
 
-#include <iostream>
-#include <map>
+
 #include <set>
 #include <string>
-#include <unordered_map>
 
 
 #include "IRenderable.h"
-#include "RenderOrder.h"
 #include "UpdateOrder.h"
 #include "SFML/Graphics/Transform.hpp"
 class GameObject {

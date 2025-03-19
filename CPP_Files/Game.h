@@ -7,6 +7,8 @@
 
 #include "GameObject.h"
 #include "Camera.h"
+#include "gameObjectComp.h"
+
 class Game :public GameObject{
     sf::RenderWindow window;
     sf::Clock clock;
@@ -14,9 +16,8 @@ class Game :public GameObject{
     Camera* camera;
     static Game* instance;
     void RenderAll();
-    static Game* game;
-    std::set<GameObject*> gameObjects;
-    std::set<IRenderable*> m_renderableObjects;
+    std::set<GameObject*,gameObjectComp> gameObjects;
+    std::set<IRenderable*,IRendableComp> m_renderableObjects;
 
 public:
     static Game *getInstance();
@@ -25,11 +26,11 @@ public:
     bool IsRunning() const;
     sf::RenderWindow &getWindow() {return window;}
     Camera& getCamera() const {return *camera;}
-    std::set<GameObject*>& getGameObjects(){return gameObjects;}
+    std::set<GameObject*,gameObjectComp>& getGameObjects(){return gameObjects;}
     void Exit();
     float ProcessGameFrame();
 
-    std::set<IRenderable*>& getRenderOrder(){return m_renderableObjects;};
+    std::set<IRenderable*,IRendableComp>& getRenderOrder(){return m_renderableObjects;};
 
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;

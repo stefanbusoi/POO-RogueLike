@@ -13,6 +13,22 @@ class Player :public GameObject,public IRenderable{
     ~Player() override;
     void Render() override;
 
+public:
+    explicit Player(GameObject &parent)
+        : GameObject(parent) {
+        m_renderOrder=RenderOrder::Player;
+        m_updateOrder=UpdateOrder::Default;
+    }
+    Player(GameObject &parent, const std::string &name, const sf::Transform &transform)
+        : GameObject(parent, name, transform) {
+        m_renderOrder=RenderOrder::Player;
+        m_updateOrder=UpdateOrder::Default;
+    }
+
+    Player(){
+        m_renderOrder=RenderOrder::Player;
+        m_updateOrder=UpdateOrder::Default;
+    }
 };
 
 
