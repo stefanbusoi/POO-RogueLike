@@ -2,11 +2,11 @@
 // Created by stefa on 3/16/2025.
 //
 
-#include "GameMap.h"
+#include "GameMap.hpp"
 
 #include <iostream>
 
-#include "Game.h"
+#include "Game.hpp"
 
 void GameMap::Render() {
     Camera &camera=Game::getInstance()->getCamera();
@@ -19,6 +19,14 @@ void GameMap::Render() {
         rect.setFillColor((i+j)%2==0?sf::Color(0,0,0):sf::Color(20,20,20));
             camera.draw(rect,transform);
     }
+}
+
+GameMap::GameMap(GameObject &parent, const std::string &name, const sf::Transform &transform) {
+    m_parent=&parent;
+    m_name=name;
+    m_transform=transform;
+    m_renderOrder=RenderOrder::Terrain;
+    m_updateOrder=UpdateOrder::Default;
 }
 
 GameMap::~GameMap() {

@@ -4,9 +4,9 @@
 #include <thread>
 
 #include <SFML/Graphics.hpp>
-#include "Game.h"
-#include "GameMap.h"
-#include "Player.h"
+#include "Game.hpp"
+#include "GameMap.hpp"
+#include "Player.hpp"
 
 int main() {
     Game game(sf::VideoMode({1920, 1080}), "RogueLike");

@@ -2,10 +2,10 @@
 // Created by stefa on 3/11/2025.
 //
 
-#include "Game.h"
+#include "Game.hpp"
 
-#include "GameMap.h"
-#include "Player.h"
+#include "GameMap.hpp"
+#include "Player.hpp"
 
 
 Game* Game::instance = nullptr;
@@ -14,7 +14,6 @@ void Game::RenderAll() {
     window.display();
     window.clear();
     for (const auto& gameObject:m_renderableObjects) {
-        std::cout << m_renderableObjects.size() << std::endl;
          gameObject->Render();
     }
 

@@ -1,6 +1,6 @@
-#include "Camera.h"
-#include "Player.h"
-#include "Game.h"
+#include "Camera.hpp"
+#include "Player.hpp"
+#include "Game.hpp"
 
 
 void Player::update(float deltaT)  {
@@ -52,5 +52,10 @@ void Player::Render() {
     text.setCharacterSize(20);
 
     camera.draw(text,m_transform);
+}
+
+Player::Player(GameObject &parent, const std::string &name, const sf::Transform &transform): GameObject(parent, name, transform) {
+    m_renderOrder=RenderOrder::Player;
+    m_updateOrder=UpdateOrder::Default;
 }
 

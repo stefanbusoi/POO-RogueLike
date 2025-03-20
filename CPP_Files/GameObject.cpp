@@ -2,12 +2,12 @@
 // Created by stefa on 3/11/2025.
 //
 
-#include "GameObject.h"
+#include "GameObject.hpp"
 
 #include <iostream>
 #include <utility>
 
-#include "Game.h"
+#include "Game.hpp"
 int GameObject::GLOBAL_ID = 0;
 GameObject::GameObject(GameObject &parent,std::string name,sf::Transform transform):
     LOCAL_ID(GLOBAL_ID++),
@@ -44,9 +44,11 @@ void GameObject::AddGameObjectToGame(GameObject *gameObject) {
 
 }
 
-sf::Transform & GameObject::getGlobalTransform() {
-    if (m_parent)
-        return m_parent->getGlobalTransform().combine(m_transform);
+sf::Transform GameObject::getGlobalTransform() {
+    if (m_parent) {
+        sf::Transform localTransform = m_parent->getLocalTransform();
+        return localTransform.combine(m_transform);
+    }
     return m_transform;
 }
 

@@ -2,15 +2,20 @@
 // Created by stefa on 3/10/2025.
 //
 
-#include "Camera.h"
-#include "Game.h"
+#include "Camera.hpp"
+#include "Game.hpp"
 
-Camera::Camera():m_window(&Game::getInstance()->getWindow()) {
+
+
+Camera::Camera(GameObject &parent, const std::string &name, const sf::Transform &transform):m_window(&Game::getInstance()->getWindow()) {
         for (const auto& player:Game::getInstance()->getChildrens()) {
                 m_player=dynamic_cast<Player*>(player);
                 if (m_player!=nullptr)
                         break;
         }
+        m_parent=&parent;
+        m_name=name;
+        m_transform=transform;
         m_updateOrder=UpdateOrder::Camera;
 }
 
@@ -19,7 +24,6 @@ sf::Transform& Camera::getTransform(){
 }
 void Camera::update(float deltaT) {
         m_transform=m_player->getGlobalTransform();
-        std::cout<<"Test";
 }
 
 void Camera::draw(const sf::Drawable& drawable,sf::Transform transform) const {

@@ -5,8 +5,8 @@
 #include <string>
 
 
-#include "IRenderable.h"
-#include "UpdateOrder.h"
+#include "IRenderable.hpp"
+#include "UpdateOrder.hpp"
 #include "SFML/Graphics/Transform.hpp"
 class GameObject {
 protected:
@@ -39,7 +39,7 @@ public:
      std::set<GameObject*> getChildrens() const {return m_children;}
 
     int GetId() const {return LOCAL_ID;}
-    sf::Transform& getGlobalTransform();
+    sf::Transform getGlobalTransform();
 
     void AddGameObjectToRenderObjects(IRenderable * game_object);
 
@@ -50,7 +50,7 @@ public:
 
 template<class T>
 T* GameObject::AddGameObject() {
-    T* newGameObject = new T();
+    T* newGameObject = new T(*this);
     auto* renderableComponent = dynamic_cast<IRenderable *>(newGameObject);
     if (renderableComponent) {
         AddGameObjectToRenderObjects(renderableComponent);

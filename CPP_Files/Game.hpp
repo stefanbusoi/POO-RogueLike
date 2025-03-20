@@ -5,9 +5,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "GameObject.h"
-#include "Camera.h"
-#include "gameObjectComp.h"
+#include "GameObject.hpp"
+#include "Camera.hpp"
+#include "gameObjectComp.hpp"
 
 class Game :public GameObject{
     sf::RenderWindow window;
@@ -17,7 +17,7 @@ class Game :public GameObject{
     static Game* instance;
     void RenderAll();
     std::set<GameObject*,gameObjectComp> gameObjects;
-    std::set<IRenderable*,IRendableComp> m_renderableObjects;
+    std::set<IRenderable*,iRendableComp> m_renderableObjects;
 
 public:
     static Game *getInstance();
@@ -30,7 +30,7 @@ public:
     void Exit();
     float ProcessGameFrame();
 
-    std::set<IRenderable*,IRendableComp>& getRenderOrder(){return m_renderableObjects;};
+    std::set<IRenderable*,iRendableComp>& getRenderOrder(){return m_renderableObjects;};
 
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;

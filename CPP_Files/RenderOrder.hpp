@@ -6,8 +6,8 @@
 #define RENDERORDER_H
 
 enum class RenderOrder {
-
-    Player=10,
     Terrain=10,
+
+    Player=60,
 };
 #endif //RENDERORDER_H
