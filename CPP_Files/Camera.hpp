@@ -11,7 +11,7 @@ class Camera:public GameObject{
 public:
     Camera(GameObject &parent, const std::string &name="NONNAME", const sf::Transform &transform=sf::Transform::Identity);
     sf::Transform& getTransform() ;
-    void draw(const sf::Drawable &drawable, sf::Transform transform) const;
+    void draw(const sf::Drawable &drawable, const sf::Transform &transform) const;
     void setTransform(const sf::Transform &transform){m_transform=transform;}
     void update(float deltaT) override;
 
