@@ -70,6 +70,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         CPP_Files/UpdateOrder.hpp
         CPP_Files/IRenderable.hpp
         CPP_Files/gameObjectComp.hpp
+        CPP_Files/IRenderable.cpp
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

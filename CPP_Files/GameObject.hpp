@@ -36,7 +36,7 @@ public:
     virtual void update(float deltaT);
     sf::Transform& getLocalTransform();
     void AddGameObjectToGame(GameObject* gameObject);
-     std::set<GameObject*> getChildrens() const {return m_children;}
+     std::set<GameObject*> getChildrens() {return m_children;}
 
     int GetId() const {return LOCAL_ID;}
     sf::Transform getGlobalTransform();

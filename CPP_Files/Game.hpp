@@ -26,12 +26,10 @@ public:
     bool IsRunning() const;
     sf::RenderWindow &getWindow() {return window;}
     Camera& getCamera() const {return *camera;}
-    std::set<GameObject*,gameObjectComp>& getGameObjects(){return gameObjects;}
     void Exit();
     float ProcessGameFrame();
-
+    std::set<GameObject*,gameObjectComp>& getGameObjects(){return gameObjects;}
     std::set<IRenderable*,iRendableComp>& getRenderOrder(){return m_renderableObjects;};
-
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;
 

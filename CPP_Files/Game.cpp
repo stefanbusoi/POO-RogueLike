@@ -35,6 +35,10 @@ Game::Game(const sf::VideoMode video_mode, const std::string &Title): title_(Tit
 
 Game::~Game() {
     if (IsRunning()) Exit();
+    for (const auto& gameObject:m_children) {
+        delete gameObject;
+    }
+    m_children.clear();
 }
 
 bool Game::IsRunning() const {
@@ -46,7 +50,6 @@ void Game::Exit() {
     window.close();
     std::cout << "Fereastra a fost inchisa\n";
 }
-//TODO: edit this
 float Game::ProcessGameFrame() {
     sf::Time deltaTime = clock.getElapsedTime();
     clock.restart();

@@ -32,8 +32,7 @@ void Player::update(float deltaT)  {
 
 }
 
-Player::~Player() {
-}
+Player::~Player() = default;
 
 void Player::Render() {
     const Camera& camera=Game::getInstance()->getCamera();

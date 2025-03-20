@@ -4,7 +4,7 @@ class iRendableComp {
 public:
     bool operator()( IRenderable *lhs,  IRenderable *rhs) const {
         if (lhs->getRenderOrder()==rhs->getRenderOrder()) {
-            return dynamic_cast<GameObject*>(lhs)->GetId()<dynamic_cast<GameObject*>(rhs)->GetId();
+           //TODO: MAKE THIS WORK return dynamic_cast<GameObject*>(lhs)->GetId()<dynamic_cast<GameObject*>(rhs)->GetId();
         }
         return lhs->getRenderOrder()<rhs->getRenderOrder();
     }

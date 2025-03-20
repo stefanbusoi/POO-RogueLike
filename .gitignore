@@ -1,3 +1,4 @@
+2DPixelDungeonAssetPack/
 
 build/
 install_dir/
@@ -52,7 +53,6 @@ install_dir/
 
 # AWS User-specific
 .idea/**/aws.xml
-
 # Generated files
 .idea/**/contentModel.xml
 

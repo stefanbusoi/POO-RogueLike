@@ -25,7 +25,12 @@ GameObject::GameObject(std::string name, sf::Transform transform): LOCAL_ID(GLOB
 
 
 
-GameObject::~GameObject() {}
+GameObject::~GameObject() {
+    Game::getInstance()->getGameObjects().erase(this);
+    for ( GameObject* x:m_children) {
+        delete x;
+    }
+}
 
 
 
