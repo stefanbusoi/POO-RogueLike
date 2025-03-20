@@ -31,6 +31,7 @@ GameObject::~GameObject() {}
 
 
 void GameObject::update(float deltaT) {
+    (void)deltaT;
     std::cout<<"Start not implemented";
 }
 

@@ -23,6 +23,7 @@ sf::Transform& Camera::getTransform(){
         return m_transform;
 }
 void Camera::update(float deltaT) {
+        void(deltaT);
         m_transform=m_player->getGlobalTransform();
 }
 
