@@ -22,6 +22,7 @@ void GameMap::Render() {
 }
 
 GameMap::GameMap(GameObject &parent, const std::string &name, const sf::Transform &transform) {
+    std::cout<<"Game Map Constructor\n";
     m_parent=&parent;
     m_name=name;
     m_transform=transform;
@@ -30,8 +31,13 @@ GameMap::GameMap(GameObject &parent, const std::string &name, const sf::Transfor
 }
 
 GameMap::~GameMap() {
+    std::cout<<"GameMap Destructor\n";
 }
 
 void GameMap::update(float deltaT) {
     (void)deltaT;
+}
+
+std::ostream & operator<<(std::ostream &os, const GameMap &obj) {
+    return os<<"CLASS GameMap "<< static_cast<const GameObject &>(obj);
 }

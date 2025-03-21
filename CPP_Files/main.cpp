@@ -10,7 +10,7 @@
 
 int main() {
     Game game(sf::VideoMode({1920, 1080}), "RogueLike");
-
+    std::cout<<game<<"\n";
 
     while(game.IsRunning()) {
         float time=game.ProcessGameFrame();

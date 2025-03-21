@@ -26,12 +26,12 @@ GameObject::GameObject(std::string name, sf::Transform transform): LOCAL_ID(GLOB
 
 
 GameObject::~GameObject() {
-    Game::getInstance()->getGameObjects().erase(this);
-    for ( GameObject* x:m_children) {
+    if (m_parent!=nullptr) {
+        Game::getInstance()->getGameObjects().erase(this);
+    }for ( GameObject* x:m_children) {
         delete x;
     }
 }
-
 
 
 
@@ -63,3 +63,13 @@ void GameObject::AddGameObjectToRenderObjects(IRenderable *game_object) {
 
 }
 
+std::ostream & operator<<(std::ostream &os, const GameObject &obj) {
+    os<<"Name: "<< obj.m_name
+            <<" Id:"<< obj.LOCAL_ID
+            << " GameObjects:{ ";
+    for (auto x:obj.m_children) {
+        os<<x->m_name<<" ";
+    }
+    os<<"}";
+    return os;
+}

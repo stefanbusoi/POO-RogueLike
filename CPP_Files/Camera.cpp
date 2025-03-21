@@ -6,13 +6,18 @@
 #include "Game.hpp"
 
 
+Camera::~Camera() {
+        std::cout<<"Camera Destructor\n";
+}
 
 Camera::Camera(GameObject &parent, const std::string &name, const sf::Transform &transform):m_window(&Game::getInstance()->getWindow()) {
+        std::cout<<"Camera Constructor\n";
         for (const auto& player:Game::getInstance()->getChildrens()) {
                 m_player=dynamic_cast<Player*>(player);
                 if (m_player!=nullptr)
                         break;
         }
+
         m_parent=&parent;
         m_name=name;
         m_transform=transform;
@@ -31,4 +36,8 @@ void Camera::draw(const sf::Drawable& drawable, const sf::Transform &transform) 
         sf::Transform tr=m_transform;
         tr.translate({m_window->getSize().x/-2.0f,m_window->getSize().y/-2.0f});
         m_window->draw(drawable,tr.getInverse()*transform);
+}
+
+std::ostream & operator<<(std::ostream &os, const Camera &obj) {
+        return os<< "CLASS Camera " << static_cast<const GameObject &>(obj);
 }

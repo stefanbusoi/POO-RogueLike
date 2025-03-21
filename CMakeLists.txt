@@ -71,6 +71,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         CPP_Files/IRenderable.hpp
         CPP_Files/gameObjectComp.hpp
         CPP_Files/IRenderable.cpp
+        CPP_Files/IColiderable.h
+        CPP_Files/IColiderable.cpp
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

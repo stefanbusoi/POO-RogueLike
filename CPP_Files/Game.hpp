@@ -12,10 +12,10 @@
 class Game :public GameObject{
     sf::RenderWindow window;
     sf::Clock clock;
-    std::string title_;
     Camera* camera;
     static Game* instance;
     void RenderAll();
+    std::set<Collider*> m_colliders;
     std::set<GameObject*,gameObjectComp> gameObjects;
     std::set<IRenderable*,iRendableComp> m_renderableObjects;
 
@@ -30,6 +30,7 @@ public:
     float ProcessGameFrame();
     std::set<GameObject*,gameObjectComp>& getGameObjects(){return gameObjects;}
     std::set<IRenderable*,iRendableComp>& getRenderOrder(){return m_renderableObjects;};
+    std::set<Collider*>& getColliders(){return m_colliders;}
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;
 

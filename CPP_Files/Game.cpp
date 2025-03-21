@@ -22,18 +22,20 @@ void Game::RenderAll() {
 
 Game *Game::getInstance() {return instance;}
 
-Game::Game(const sf::VideoMode video_mode, const std::string &Title): title_(Title){
+Game::Game(const sf::VideoMode video_mode, const std::string &Title): GameObject(Title){
+    std::cout<<"Game Constructor";
     if (instance==nullptr) {
         instance=this;
-
     }
     window.create(video_mode, Title, sf::State::Fullscreen);
-    AddGameObject<Player>();
-    camera=AddGameObject<Camera>();
-    AddGameObject<GameMap>();
+    Player player("Player");
+    AddGameObject<Player>(std::move(player));
+    camera=AddGameObject<Camera>("Camera");
+    AddGameObject<GameMap>("GameMap");
 }
 
 Game::~Game() {
+    std::cout<<"Game Destructor";
     if (IsRunning()) Exit();
     for (const auto& gameObject:m_children) {
         delete gameObject;

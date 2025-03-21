@@ -45,7 +45,7 @@ void Player::Render() {
     sf::Font font("../Minecraft.ttf");
 
     sf::Text text(font);
-    text.setString("STEFAN");
+    text.setString(m_name);
     text.setPosition(sf::Vector2f(-20,-47));
     text.setFillColor(sf::Color::White);
     text.setCharacterSize(20);
@@ -53,8 +53,16 @@ void Player::Render() {
     camera.draw(text,m_transform);
 }
 
+Player::Player(const std::string &name, const sf::Transform &transform) :GameObject( name, transform){
+    m_renderOrder=RenderOrder::Player;
+    m_updateOrder=UpdateOrder::Default;
+}
+
 Player::Player(GameObject &parent, const std::string &name, const sf::Transform &transform): GameObject(parent, name, transform) {
     m_renderOrder=RenderOrder::Player;
     m_updateOrder=UpdateOrder::Default;
 }
 
+std::ostream & operator<<(std::ostream &os, const Player &obj) {
+    return os <<"CLASS Player "<<static_cast<const GameObject &>(obj);
+}
