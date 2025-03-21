@@ -1,5 +1,5 @@
 # RogueDungeons
-Roguelike dungeon crawler
+  Roguelike dungeon crawler
 ### Folosiți template-ul corespunzător grupei voastre!
 
 | Laborant  | Link template                                |
@@ -31,11 +31,11 @@ O cerință nu se consideră îndeplinită dacă este realizată doar prin cod g
 #### Cerințe
 - [X] definirea a minim **3-4 clase** folosind compunere cu clasele definite de voi; moștenirile nu se iau în considerare aici
 - [X] constructori de inițializare cu parametri pentru fiecare clasă
-- [ ] pentru o aceeași (singură) clasă: constructor de copiere, `operator=` de copiere, destructor
+- [x] pentru o aceeași (singură) clasă: constructor de copiere, `operator=` de copiere, destructor
 <!-- - [ ] pentru o altă clasă: constructor de mutare, `operator=` de mutare, destructor -->
 <!-- - [ ] pentru o altă clasă: toate cele 5 funcții membru speciale -->
-- [ ] `operator<<` pentru **toate** clasele pentru afișare (`std::ostream`) folosind compunere de apeluri cu `operator<<`
-- [ ] cât mai multe `const` (unde este cazul) și funcții `private`
+- [x] `operator<<` pentru **toate** clasele pentru afișare (`std::ostream`) folosind compunere de apeluri cu `operator<<`
+- [x] cât mai multe `const` (unde este cazul) și funcții `private`
 - [X] implementarea a minim 3 funcții membru publice pentru funcționalități netriviale specifice temei alese, dintre care cel puțin 1-2 funcții mai complexe
   - nu doar citiri/afișări sau adăugat/șters elemente într-un/dintr-un vector
 - [X] scenariu de utilizare **cu sens** a claselor definite:
