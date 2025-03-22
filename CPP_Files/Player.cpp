@@ -34,15 +34,39 @@ void Player::update(float deltaT)  {
 
 Player::~Player() = default;
 
+Player::Player(const Player &other): GameObject(other),
+                                     IRenderable(other) {
+}
+
+Player::Player(Player &&other) noexcept: GameObject(std::move(other)),
+                                         IRenderable(std::move(other)) {
+}
+
+Player & Player::operator=(const Player &other) {
+    if (this == &other)
+        return *this;
+    GameObject::operator =(other);
+    IRenderable::operator =(other);
+    return *this;
+}
+
+Player & Player::operator=(Player &&other) noexcept {
+    if (this == &other)
+        return *this;
+    GameObject::operator =(std::move(other));
+    IRenderable::operator =(std::move(other));
+    return *this;
+}
+
 void Player::Render() {
     const Camera& camera=Game::getInstance()->getCamera();
     sf::CircleShape shape(40.f);
     shape.setFillColor(sf::Color(100, 250, 50));
-    shape.setPosition(sf::Vector2f(-20,-20));
+    shape.setPosition(sf::Vector2f(-40,-40));
     sf::Transform transform=this->m_transform;
 
     camera.draw(shape,transform);
-    sf::Font font("../Minecraft.ttf");
+    static sf::Font font("../Minecraft.ttf");
 
     sf::Text text(font);
     text.setString(m_name);
@@ -53,14 +77,13 @@ void Player::Render() {
     camera.draw(text,m_transform);
 }
 
-Player::Player(const std::string &name, const sf::Transform &transform) :GameObject( name, transform){
-    m_renderOrder=RenderOrder::Player;
-    m_updateOrder=UpdateOrder::Default;
-}
 
-Player::Player(GameObject &parent, const std::string &name, const sf::Transform &transform): GameObject(parent, name, transform) {
+
+Player::Player( const std::string &name, const sf::Transform &transform,GameObject* parent): GameObject(name, transform,parent) {
     m_renderOrder=RenderOrder::Player;
     m_updateOrder=UpdateOrder::Default;
+
+    //this->addCollider();
 }
 
 std::ostream & operator<<(std::ostream &os, const Player &obj) {

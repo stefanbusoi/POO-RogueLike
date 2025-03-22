@@ -83,9 +83,7 @@ protected:
 public:
     UpdateOrder getUpdateOrder() const {return m_updateOrder;}
     /*Used for Game class only*/
-    GameObject(GameObject &parent,std::string name, sf::Transform transform);
-
-    GameObject(std::string name="NONNAME",sf::Transform transform=sf::Transform::Identity);
+    GameObject(std::string name="NONNAME", sf::Transform transform=sf::Transform::Identity,GameObject* parent=nullptr);
     virtual ~GameObject();
 
     virtual void update(float deltaT);
@@ -96,7 +94,7 @@ public:
     sf::Transform& getLocalTransform();
     void setName(const std::string& name) {m_name=name;}
     void AddGameObjectToRenderObjects(IRenderable * game_object);
-
+    void addCollider(Collider& collider);
     friend std::ostream & operator<<(std::ostream &os, const GameObject &obj);
     template <class T=GameObject>
     T* AddGameObject(std::string name="NONAME", sf::Transform transform=sf::Transform::Identity);
@@ -108,7 +106,7 @@ public:
 
 template<class T>
 T* GameObject::AddGameObject(std::string name, sf::Transform transform) {
-    T* newGameObject = new T(*this,name,transform);
+    T* newGameObject = new T(name,transform,this);
     auto* renderableComponent = dynamic_cast<IRenderable *>(newGameObject);
     if (renderableComponent) {
         AddGameObjectToRenderObjects(renderableComponent);
@@ -139,10 +137,3 @@ T* GameObject:: AddGameObject(T&& temp){
 
     return newGameObject;
 }
-
-
-
-
-
-
-

@@ -12,11 +12,12 @@ class Camera:public GameObject{
 public:
     friend std::ostream & operator<<(std::ostream &os, const Camera &obj);
     ~Camera();
-    Camera(GameObject &parent, const std::string &name="NONNAME", const sf::Transform &transform=sf::Transform::Identity);
+
+    Camera( const std::string &name="NONNAME", const sf::Transform &transform=sf::Transform::Identity,GameObject* parent=nullptr);
     sf::Transform& getTransform() ;
     void draw(const sf::Drawable &drawable, const sf::Transform &transform) const;
     void setTransform(const sf::Transform &transform){m_transform=transform;}
     void update(float deltaT) override;
-
+    float getViewRadius() const;
 };
 

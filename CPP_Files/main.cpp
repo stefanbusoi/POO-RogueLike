@@ -11,6 +11,7 @@
 int main() {
     Game game(sf::VideoMode({1920, 1080}), "RogueLike");
     std::cout<<game<<"\n";
+    sf::Font font("../Minecraft.ttf");
 
     while(game.IsRunning()) {
         float time=game.ProcessGameFrame();
@@ -33,7 +34,6 @@ int main() {
             }
         }
 
-        sf::Font font("../Minecraft.ttf");
         sf::Text text(font);
         text.setString(std::to_string(time));
         text.setPosition(sf::Vector2f(30,30));
@@ -41,12 +41,11 @@ int main() {
         text.setCharacterSize(20);
         game.getWindow().draw(text);
 
-        text.setString(std::to_string(1/time));
+        text.setString(std::to_string((int)(1/time)));
         text.setPosition(sf::Vector2f(30,50));
         game.getWindow().draw(text);
-
+       // std::cout<<1/time<<"\n";
     }
 
-    std::cout << "Programul a terminat executia\n";
     return 0;
 }

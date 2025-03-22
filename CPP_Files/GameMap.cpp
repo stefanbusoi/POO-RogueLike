@@ -10,22 +10,24 @@
 
 void GameMap::Render() {
     Camera &camera=Game::getInstance()->getCamera();
+    float dist=camera.getViewRadius()+300;
+    sf::RectangleShape rect;
     for (int i=-5;i<5;i++)
     for (int j=-5;j<5;j++) {
-        sf::RectangleShape rect;
+
         sf::Transform transform=sf::Transform::Identity;
         transform.translate(sf::Vector2f(i,j)*100.0f);
-        rect.setSize(sf::Vector2f(100,100));
-        rect.setFillColor((i+j)%2==0?sf::Color(0,0,0):sf::Color(20,20,20));
+        float squareDist= (transform.transformPoint({0,0})-camera.getTransform().transformPoint({0,0})).length();
+        if (squareDist<dist) {
+            rect.setSize(sf::Vector2f(100,100));
+            rect.setFillColor((i+j)%2==0?sf::Color(50,50,50,255*((dist-squareDist)/dist)):sf::Color(20,20,20,255*((dist-squareDist)/dist)));
             camera.draw(rect,transform);
+        }
     }
 }
 
-GameMap::GameMap(GameObject &parent, const std::string &name, const sf::Transform &transform) {
+GameMap::GameMap( const std::string &name, const sf::Transform &transform,GameObject* parent):GameObject(name,transform,parent) {
     std::cout<<"Game Map Constructor\n";
-    m_parent=&parent;
-    m_name=name;
-    m_transform=transform;
     m_renderOrder=RenderOrder::Terrain;
     m_updateOrder=UpdateOrder::Default;
 }

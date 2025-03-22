@@ -9,18 +9,13 @@
 
 #include "Game.hpp"
 int GameObject::GLOBAL_ID = 0;
-GameObject::GameObject(GameObject &parent,std::string name,sf::Transform transform):
+GameObject::GameObject(std::string name,sf::Transform transform,GameObject *parent):
     LOCAL_ID(GLOBAL_ID++),
     m_transform(transform),
     m_name(std::move(name)),
-    m_parent(&parent)
+    m_parent(parent)
    {}
 
-
-GameObject::GameObject(std::string name, sf::Transform transform): LOCAL_ID(GLOBAL_ID++),
-                                                                   m_transform(transform),
-                                                                   m_name(std::move(name)),
-                                                                   m_parent(nullptr) {}
 
 
 
@@ -61,6 +56,11 @@ sf::Transform GameObject::getGlobalTransform() {
 void GameObject::AddGameObjectToRenderObjects(IRenderable *game_object) {
     Game::getInstance()->getRenderOrder().insert(game_object);
 
+}
+
+void GameObject::addCollider(Collider &collider) {
+    collider.setGameObject(this);
+    Game::getInstance()->getColliders().insert(&collider);
 }
 
 std::ostream & operator<<(std::ostream &os, const GameObject &obj) {

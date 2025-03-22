@@ -17,38 +17,19 @@ class Player :public GameObject,public IRenderable{
 public:
     ~Player() override;
 
-    Player(const Player &other)
-        : GameObject(other),
-          IRenderable(other) {
-    }
+    Player(const Player &other);
 
-    Player(Player &&other) noexcept
-        : GameObject(std::move(other)),
-          IRenderable(std::move(other)) {
-    }
+    Player(Player &&other) noexcept;
 
-    Player & operator=(const Player &other) {
-        if (this == &other)
-            return *this;
-        GameObject::operator =(other);
-        IRenderable::operator =(other);
-        return *this;
-    }
+    Player & operator=(const Player &other);
 
-    Player & operator=(Player &&other) noexcept {
-        if (this == &other)
-            return *this;
-        GameObject::operator =(std::move(other));
-        IRenderable::operator =(std::move(other));
-        return *this;
-    }
+    Player & operator=(Player &&other) noexcept;
 
 private:
     friend std::ostream & operator<<(std::ostream &os, const Player &obj);
 
 public:
-    Player( const std::string &name="NONNAME", const sf::Transform &transform=sf::Transform::Identity);
-    Player(GameObject &parent, const std::string &name="NONNAME", const sf::Transform &transform=sf::Transform::Identity);
+    Player( const std::string &name="NONNAME", const sf::Transform &transform=sf::Transform::Identity,GameObject* parent=nullptr);
     Player()=delete;
 };
 
